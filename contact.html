@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact — Casa Soledad</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a href="index.html" class="wordmark">Casa Soledad</a>
+    <nav class="main-nav">
+      <a href="index.html">Home</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="availability.html">Availability</a>
+      <a href="contact.html" class="active">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<section class="page-head wrap">
+  <p class="section-eyebrow">Get in touch</p>
+  <h1>Contact</h1>
+  <p class="page-head-sub">Tell us your dates and group size, and we'll reply by email to confirm availability and arrange booking.</p>
+</section>
+
+<section class="contact-section wrap">
+  <div class="contact-grid">
+
+    <form class="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+      <label class="form-label" for="name">Name</label>
+      <input class="form-input" type="text" id="name" name="name" required>
+
+      <label class="form-label" for="email">Email</label>
+      <input class="form-input" type="email" id="email" name="email" required>
+
+      <label class="form-label" for="dates">Requested dates</label>
+      <input class="form-input" type="text" id="dates" name="dates" placeholder="e.g. July 10–17, 2026">
+
+      <label class="form-label" for="guests">Number of guests</label>
+      <input class="form-input" type="number" id="guests" name="guests" min="1" max="8">
+
+      <label class="form-label" for="message">Message</label>
+      <textarea class="form-input form-textarea" id="message" name="message" rows="5" placeholder="Anything else we should know?"></textarea>
+
+      <button type="submit" class="btn btn-primary form-submit">Send inquiry</button>
+    </form>
+
+    <div class="contact-aside">
+      <h3>Prefer email directly?</h3>
+      <p>Reach us anytime at:</p>
+      <a class="contact-email" href="mailto:alexanderdlusk@gmail.com">alexanderdlusk@gmail.com</a>
+      <p class="contact-note">We typically reply within a day or two. Please check the <a href="availability.html">availability calendar</a> before reaching out so we can confirm your dates quickly.</p>
+    </div>
+
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <span>Casa Soledad &middot; Todos Santos, BCS</span>
+    <a href="contact.html">alexanderdlusk@gmail.com</a>
+  </div>
+</footer>
+
+</body>
+</html>

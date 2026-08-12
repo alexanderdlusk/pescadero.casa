@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Availability — Casa Soledad</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a href="index.html" class="wordmark">Casa Soledad</a>
+    <nav class="main-nav">
+      <a href="index.html">Home</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="availability.html" class="active">Availability</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<section class="page-head wrap">
+  <p class="section-eyebrow">Plan your stay</p>
+  <h1>Availability</h1>
+  <p class="page-head-sub">Dates marked in terracotta are already booked. Everything else is open — send us an email to hold your dates.</p>
+</section>
+
+<section class="calendar-section wrap">
+  <div class="calendar-legend">
+    <span class="legend-item"><span class="legend-swatch swatch-open"></span>Open</span>
+    <span class="legend-item"><span class="legend-swatch swatch-booked"></span>Booked</span>
+  </div>
+
+  <div class="calendar-nav">
+    <button id="prevMonth" class="cal-btn" aria-label="Previous month">&#8592;</button>
+    <h2 id="monthLabel" class="month-label"></h2>
+    <button id="nextMonth" class="cal-btn" aria-label="Next month">&#8594;</button>
+  </div>
+
+  <div id="calendarGrid" class="calendar-grid" role="grid" aria-label="Booking calendar"></div>
+
+  <p class="calendar-note">This calendar is updated by hand, so please confirm exact dates with us by email before finalizing travel plans.</p>
+
+  <div class="calendar-cta">
+    <a href="contact.html" class="btn btn-primary">Inquire about these dates</a>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <span>Casa Soledad &middot; Todos Santos, BCS</span>
+    <a href="contact.html">alexanderdlusk@gmail.com</a>
+  </div>
+</footer>
+
+<script>
+// ---- Booked date ranges ----
+// Add or remove ranges here. Format: ["YYYY-MM-DD", "YYYY-MM-DD"] (inclusive start, inclusive end)
+const bookedRanges = [
+  // Example: ["2026-07-10", "2026-07-17"],
+];
+
+function expandRanges(ranges) {
+  const set = new Set();
+  ranges.forEach(([start, end]) => {
+    let d = new Date(start + "T00:00:00");
+    const last = new Date(end + "T00:00:00");
+    while (d <= last) {
+      set.add(d.toISOString().slice(0, 10));
+      d.setDate(d.getDate() + 1);
+    }
+  });
+  return set;
+}
+
+const bookedSet = expandRanges(bookedRanges);
+
+const monthLabel = document.getElementById("monthLabel");
+const grid = document.getElementById("calendarGrid");
+const prevBtn = document.getElementById("prevMonth");
+const nextBtn = document.getElementById("nextMonth");
+
+const today = new Date();
+let viewYear = today.getFullYear();
+let viewMonth = today.getMonth();
+
+const monthNames = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+const dayNames = ["S","M","T","W","T","F","S"];
+
+function pad(n) { return n < 10 ? "0" + n : "" + n; }
+
+function render() {
+  grid.innerHTML = "";
+  monthLabel.textContent = monthNames[viewMonth] + " " + viewYear;
+
+  dayNames.forEach(d => {
+    const cell = document.createElement("div");
+    cell.className = "cal-cell cal-dayname";
+    cell.textContent = d;
+    grid.appendChild(cell);
+  });
+
+  const firstDay = new Date(viewYear, viewMonth, 1).getDay();
+  const daysInMonth = new Date(viewYear, viewMonth + 1, 0).getDate();
+
+  for (let i = 0; i < firstDay; i++) {
+    const blank = document.createElement("div");
+    blank.className = "cal-cell cal-blank";
+    grid.appendChild(blank);
+  }
+
+  for (let day = 1; day <= daysInMonth; day++) {
+    const dateStr = viewYear + "-" + pad(viewMonth + 1) + "-" + pad(day);
+    const cell = document.createElement("div");
+    cell.className = "cal-cell cal-day" + (bookedSet.has(dateStr) ? " cal-booked" : " cal-open");
+    cell.setAttribute("role", "gridcell");
+    cell.setAttribute("aria-label", dateStr + (bookedSet.has(dateStr) ? " booked" : " open"));
+    cell.textContent = day;
+    grid.appendChild(cell);
+  }
+}
+
+prevBtn.addEventListener("click", () => {
+  viewMonth--;
+  if (viewMonth < 0) { viewMonth = 11; viewYear--; }
+  render();
+});
+nextBtn.addEventListener("click", () => {
+  viewMonth++;
+  if (viewMonth > 11) { viewMonth = 0; viewYear++; }
+  render();
+});
+
+render();
+</script>
+
+</body>
+</html>
