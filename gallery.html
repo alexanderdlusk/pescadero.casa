@@ -8,6 +8,89 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
+<style>
+/* Lightbox */
+.lightbox-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(20,14,12,0.93);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.lightbox-overlay.active { display: flex; }
+
+.lightbox-img-wrap {
+  position: relative;
+  max-width: 92vw;
+  max-height: 82vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lightbox-img-wrap img {
+  max-width: 92vw;
+  max-height: 82vh;
+  object-fit: contain;
+  border-radius: 10px;
+  box-shadow: 0 8px 48px rgba(0,0,0,0.6);
+}
+
+.lightbox-caption {
+  color: #C9BEB1;
+  font-family: "Inter", sans-serif;
+  font-size: 0.9rem;
+  margin-top: 16px;
+  text-align: center;
+}
+
+.lightbox-close {
+  position: fixed;
+  top: 20px;
+  right: 24px;
+  background: none;
+  border: none;
+  color: #FFFDF9;
+  font-size: 2rem;
+  cursor: pointer;
+  line-height: 1;
+  padding: 8px;
+  opacity: 0.8;
+  transition: opacity 0.2s;
+}
+.lightbox-close:hover { opacity: 1; }
+
+.lightbox-prev,
+.lightbox-next {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255,253,249,0.12);
+  border: 1.5px solid rgba(255,253,249,0.25);
+  color: #FFFDF9;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 14px 18px;
+  border-radius: 8px;
+  transition: background 0.2s;
+  line-height: 1;
+}
+.lightbox-prev:hover, .lightbox-next:hover { background: rgba(255,253,249,0.22); }
+.lightbox-prev { left: 16px; }
+.lightbox-next { right: 16px; }
+
+.gallery-grid img {
+  cursor: zoom-in;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.gallery-grid img:hover {
+  transform: scale(1.03);
+  box-shadow: 0 4px 24px rgba(44,36,32,0.18);
+}
+</style>
 </head>
 <body>
 
@@ -26,7 +109,7 @@
 <section class="page-head wrap">
   <p class="section-eyebrow">A look inside</p>
   <h1>Gallery</h1>
-  <p class="page-head-sub">Every room at Casa Soledad, room by room.</p>
+  <p class="page-head-sub">Click any photo to enlarge. Every room at Casa Soledad, room by room.</p>
 </section>
 
 <section class="gallery-section wrap">
@@ -63,12 +146,68 @@
   </div>
 </section>
 
+<!-- Lightbox -->
+<div class="lightbox-overlay" id="lightbox" role="dialog" aria-modal="true" aria-label="Photo viewer">
+  <button class="lightbox-close" id="lbClose" aria-label="Close">&times;</button>
+  <button class="lightbox-prev" id="lbPrev" aria-label="Previous photo">&#8592;</button>
+  <div class="lightbox-img-wrap">
+    <img id="lbImg" src="" alt="">
+  </div>
+  <p class="lightbox-caption" id="lbCaption"></p>
+  <button class="lightbox-next" id="lbNext" aria-label="Next photo">&#8594;</button>
+</div>
+
 <footer class="site-footer">
   <div class="wrap footer-inner">
     <span>Casa Soledad &middot; Todos Santos, BCS</span>
     <a href="contact.html">alexanderdlusk@gmail.com</a>
   </div>
 </footer>
+
+<script>
+const overlay = document.getElementById("lightbox");
+const lbImg   = document.getElementById("lbImg");
+const lbCap   = document.getElementById("lbCaption");
+const lbClose = document.getElementById("lbClose");
+const lbPrev  = document.getElementById("lbPrev");
+const lbNext  = document.getElementById("lbNext");
+
+// Collect all gallery images in order
+const allImgs = Array.from(document.querySelectorAll(".gallery-grid img"));
+let current = 0;
+
+function open(index) {
+  current = index;
+  const img = allImgs[current];
+  lbImg.src = img.src;
+  lbImg.alt = img.alt;
+  lbCap.textContent = img.alt;
+  overlay.classList.add("active");
+  document.body.style.overflow = "hidden";
+  lbClose.focus();
+}
+
+function close() {
+  overlay.classList.remove("active");
+  document.body.style.overflow = "";
+}
+
+function prev() { open((current - 1 + allImgs.length) % allImgs.length); }
+function next() { open((current + 1) % allImgs.length); }
+
+allImgs.forEach((img, i) => img.addEventListener("click", () => open(i)));
+lbClose.addEventListener("click", close);
+lbPrev.addEventListener("click", prev);
+lbNext.addEventListener("click", next);
+overlay.addEventListener("click", e => { if (e.target === overlay) close(); });
+
+document.addEventListener("keydown", e => {
+  if (!overlay.classList.contains("active")) return;
+  if (e.key === "Escape")      close();
+  if (e.key === "ArrowLeft")   prev();
+  if (e.key === "ArrowRight")  next();
+});
+</script>
 
 </body>
 </html>
