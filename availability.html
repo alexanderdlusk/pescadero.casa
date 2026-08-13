@@ -8,6 +8,261 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
+<style>
+/* ── Talavera calendar ── */
+.calendar-wrap {
+  max-width: 680px;
+  margin: 0 auto;
+}
+
+.calendar-frame {
+  background: #2C1A0E;
+  border-radius: 18px;
+  padding: 6px;
+  box-shadow: 0 8px 40px rgba(44,26,14,0.35);
+}
+
+.calendar-inner {
+  background: #F7F0E0;
+  border-radius: 13px;
+  overflow: hidden;
+  border: 3px solid #8B4226;
+}
+
+/* Header band */
+.cal-header {
+  background: #8B4226;
+  padding: 20px 24px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 4px solid #2C1A0E;
+  position: relative;
+}
+
+/* Talavera-style decorative border strip below header */
+.cal-header::after {
+  content: "";
+  position: absolute;
+  bottom: -12px;
+  left: 0; right: 0;
+  height: 8px;
+  background: repeating-linear-gradient(
+    90deg,
+    #D9A441 0px, #D9A441 12px,
+    #2C1A0E 12px, #2C1A0E 14px,
+    #D9A441 14px, #D9A441 26px,
+    #8B4226 26px, #8B4226 28px
+  );
+  z-index: 2;
+}
+
+.month-label {
+  margin: 0;
+  color: #F7F0E0;
+  font-size: 1.6rem;
+  letter-spacing: 0.02em;
+}
+
+.cal-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 2px solid rgba(247,240,224,0.4);
+  background: rgba(247,240,224,0.12);
+  font-size: 1.1rem;
+  cursor: pointer;
+  color: #F7F0E0;
+  transition: background 0.2s, border-color 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.cal-btn:hover {
+  background: rgba(247,240,224,0.25);
+  border-color: #D9A441;
+  color: #D9A441;
+}
+
+/* Day name row */
+.cal-daynames {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  background: #3D1F0A;
+  padding: 14px 16px 10px;
+  gap: 6px;
+}
+
+.cal-dayname-cell {
+  text-align: center;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #D9A441;
+}
+
+/* Grid body */
+.cal-body {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
+  padding: 16px;
+  background: #F7F0E0;
+}
+
+/* Base tile */
+.cal-tile {
+  aspect-ratio: 1;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.95rem;
+  font-weight: 600;
+  position: relative;
+  font-family: "Inter", sans-serif;
+}
+
+/* Blank tiles */
+.cal-tile-blank {
+  background: transparent;
+}
+
+/* Open tiles — cream with talavera motif border */
+.cal-tile-open {
+  background: #FFFDF6;
+  color: #2C1A0E;
+  border: 2px solid #C8A882;
+  box-shadow: inset 0 0 0 1px rgba(217,164,65,0.2);
+  cursor: default;
+}
+
+/* SVG corner flourish on open tiles */
+.cal-tile-open::before,
+.cal-tile-open::after {
+  content: "";
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #D9A441;
+  opacity: 0.55;
+}
+.cal-tile-open::before { top: 3px; left: 3px; }
+.cal-tile-open::after  { bottom: 3px; right: 3px; }
+
+/* Today highlight */
+.cal-tile-today {
+  background: #FFFDF6;
+  color: #2C1A0E;
+  border: 2px solid #D9A441;
+  box-shadow: inset 0 0 0 1px rgba(217,164,65,0.4);
+}
+.cal-tile-today::before { top: 3px; left: 3px; background: #D9A441; opacity: 0.8; }
+.cal-tile-today::after  { bottom: 3px; right: 3px; background: #D9A441; opacity: 0.8; }
+
+.today-dot {
+  position: absolute;
+  bottom: 5px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #8B4226;
+}
+
+/* Booked tiles — terracotta with cross-hatch feel */
+.cal-tile-booked {
+  background: #8B4226;
+  color: rgba(247,240,224,0.6);
+  border: 2px solid #6B3019;
+  text-decoration: line-through;
+  text-decoration-color: rgba(247,240,224,0.4);
+  background-image: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 4px,
+    rgba(0,0,0,0.06) 4px,
+    rgba(0,0,0,0.06) 5px
+  );
+}
+
+/* Legend */
+.calendar-legend {
+  display: flex;
+  gap: 28px;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.9rem;
+  color: #5C4F45;
+  font-weight: 500;
+}
+
+.legend-tile {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.legend-tile-open {
+  background: #FFFDF6;
+  border: 2px solid #C8A882;
+}
+.legend-tile-open::before {
+  content: "";
+  position: absolute;
+  top: 3px; left: 3px;
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: #D9A441;
+  opacity: 0.7;
+}
+
+.legend-tile-booked {
+  background: #8B4226;
+  border: 2px solid #6B3019;
+  background-image: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 4px,
+    rgba(0,0,0,0.08) 4px,
+    rgba(0,0,0,0.08) 5px
+  );
+}
+
+/* Decorative tile strip above calendar */
+.talavera-strip {
+  display: flex;
+  justify-content: center;
+  gap: 0;
+  margin-bottom: 28px;
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+.talavera-strip svg {
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+}
+
+@media (max-width: 600px) {
+  .cal-body { gap: 5px; padding: 10px; }
+  .cal-tile { font-size: 0.82rem; }
+  .cal-daynames { padding: 10px 10px 8px; gap: 4px; }
+  .talavera-strip svg { width: 36px; height: 36px; }
+}
+</style>
 </head>
 <body>
 
@@ -30,20 +285,49 @@
 </section>
 
 <section class="calendar-section wrap">
-  <div class="calendar-legend">
-    <span class="legend-item"><span class="legend-swatch swatch-open"></span>Open</span>
-    <span class="legend-item"><span class="legend-swatch swatch-booked"></span>Booked</span>
+
+  <!-- Decorative talavera tile strip -->
+  <div class="talavera-strip" aria-hidden="true">
+    <!-- Repeating talavera-inspired SVG tile motif, 14 across -->
+    <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><rect width="48" height="48" fill="#8B4226"/><rect x="4" y="4" width="40" height="40" fill="none" stroke="#D9A441" stroke-width="1.5"/><circle cx="24" cy="24" r="8" fill="none" stroke="#F7F0E0" stroke-width="1.5"/><circle cx="24" cy="24" r="3" fill="#D9A441"/><line x1="4" y1="4" x2="16" y2="16" stroke="#D9A441" stroke-width="1"/><line x1="44" y1="4" x2="32" y2="16" stroke="#D9A441" stroke-width="1"/><line x1="4" y1="44" x2="16" y2="32" stroke="#D9A441" stroke-width="1"/><line x1="44" y1="44" x2="32" y2="32" stroke="#D9A441" stroke-width="1"/></svg>
+    <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><rect width="48" height="48" fill="#2C1A0E"/><circle cx="24" cy="24" r="14" fill="none" stroke="#D9A441" stroke-width="1.5"/><circle cx="24" cy="24" r="6" fill="#8B4226"/><rect x="10" y="10" width="28" height="28" fill="none" stroke="#D9A441" stroke-width="1" transform="rotate(45 24 24)"/></svg>
+    <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><rect width="48" height="48" fill="#8B4226"/><rect x="4" y="4" width="40" height="40" fill="none" stroke="#D9A441" stroke-width="1.5"/><circle cx="24" cy="24" r="8" fill="none" stroke="#F7F0E0" stroke-width="1.5"/><circle cx="24" cy="24" r="3" fill="#D9A441"/><line x1="4" y1="4" x2="16" y2="16" stroke="#D9A441" stroke-width="1"/><line x1="44" y1="4" x2="32" y2="16" stroke="#D9A441" stroke-width="1"/><line x1="4" y1="44" x2="16" y2="32" stroke="#D9A441" stroke-width="1"/><line x1="44" y1="44" x2="32" y2="32" stroke="#D9A441" stroke-width="1"/></svg>
+    <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><rect width="48" height="48" fill="#2C1A0E"/><circle cx="24" cy="24" r="14" fill="none" stroke="#D9A441" stroke-width="1.5"/><circle cx="24" cy="24" r="6" fill="#8B4226"/><rect x="10" y="10" width="28" height="28" fill="none" stroke="#D9A441" stroke-width="1" transform="rotate(45 24 24)"/></svg>
+    <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><rect width="48" height="48" fill="#8B4226"/><rect x="4" y="4" width="40" height="40" fill="none" stroke="#D9A441" stroke-width="1.5"/><circle cx="24" cy="24" r="8" fill="none" stroke="#F7F0E0" stroke-width="1.5"/><circle cx="24" cy="24" r="3" fill="#D9A441"/><line x1="4" y1="4" x2="16" y2="16" stroke="#D9A441" stroke-width="1"/><line x1="44" y1="4" x2="32" y2="16" stroke="#D9A441" stroke-width="1"/><line x1="4" y1="44" x2="16" y2="32" stroke="#D9A441" stroke-width="1"/><line x1="44" y1="44" x2="32" y2="32" stroke="#D9A441" stroke-width="1"/></svg>
+    <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><rect width="48" height="48" fill="#2C1A0E"/><circle cx="24" cy="24" r="14" fill="none" stroke="#D9A441" stroke-width="1.5"/><circle cx="24" cy="24" r="6" fill="#8B4226"/><rect x="10" y="10" width="28" height="28" fill="none" stroke="#D9A441" stroke-width="1" transform="rotate(45 24 24)"/></svg>
+    <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><rect width="48" height="48" fill="#8B4226"/><rect x="4" y="4" width="40" height="40" fill="none" stroke="#D9A441" stroke-width="1.5"/><circle cx="24" cy="24" r="8" fill="none" stroke="#F7F0E0" stroke-width="1.5"/><circle cx="24" cy="24" r="3" fill="#D9A441"/><line x1="4" y1="4" x2="16" y2="16" stroke="#D9A441" stroke-width="1"/><line x1="44" y1="4" x2="32" y2="16" stroke="#D9A441" stroke-width="1"/><line x1="4" y1="44" x2="16" y2="32" stroke="#D9A441" stroke-width="1"/><line x1="44" y1="44" x2="32" y2="32" stroke="#D9A441" stroke-width="1"/></svg>
+    <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><rect width="48" height="48" fill="#2C1A0E"/><circle cx="24" cy="24" r="14" fill="none" stroke="#D9A441" stroke-width="1.5"/><circle cx="24" cy="24" r="6" fill="#8B4226"/><rect x="10" y="10" width="28" height="28" fill="none" stroke="#D9A441" stroke-width="1" transform="rotate(45 24 24)"/></svg>
+    <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><rect width="48" height="48" fill="#8B4226"/><rect x="4" y="4" width="40" height="40" fill="none" stroke="#D9A441" stroke-width="1.5"/><circle cx="24" cy="24" r="8" fill="none" stroke="#F7F0E0" stroke-width="1.5"/><circle cx="24" cy="24" r="3" fill="#D9A441"/><line x1="4" y1="4" x2="16" y2="16" stroke="#D9A441" stroke-width="1"/><line x1="44" y1="4" x2="32" y2="16" stroke="#D9A441" stroke-width="1"/><line x1="4" y1="44" x2="16" y2="32" stroke="#D9A441" stroke-width="1"/><line x1="44" y1="44" x2="32" y2="32" stroke="#D9A441" stroke-width="1"/></svg>
+    <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><rect width="48" height="48" fill="#2C1A0E"/><circle cx="24" cy="24" r="14" fill="none" stroke="#D9A441" stroke-width="1.5"/><circle cx="24" cy="24" r="6" fill="#8B4226"/><rect x="10" y="10" width="28" height="28" fill="none" stroke="#D9A441" stroke-width="1" transform="rotate(45 24 24)"/></svg>
+    <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><rect width="48" height="48" fill="#8B4226"/><rect x="4" y="4" width="40" height="40" fill="none" stroke="#D9A441" stroke-width="1.5"/><circle cx="24" cy="24" r="8" fill="none" stroke="#F7F0E0" stroke-width="1.5"/><circle cx="24" cy="24" r="3" fill="#D9A441"/><line x1="4" y1="4" x2="16" y2="16" stroke="#D9A441" stroke-width="1"/><line x1="44" y1="4" x2="32" y2="16" stroke="#D9A441" stroke-width="1"/><line x1="4" y1="44" x2="16" y2="32" stroke="#D9A441" stroke-width="1"/><line x1="44" y1="44" x2="32" y2="32" stroke="#D9A441" stroke-width="1"/></svg>
+    <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><rect width="48" height="48" fill="#2C1A0E"/><circle cx="24" cy="24" r="14" fill="none" stroke="#D9A441" stroke-width="1.5"/><circle cx="24" cy="24" r="6" fill="#8B4226"/><rect x="10" y="10" width="28" height="28" fill="none" stroke="#D9A441" stroke-width="1" transform="rotate(45 24 24)"/></svg>
+    <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><rect width="48" height="48" fill="#8B4226"/><rect x="4" y="4" width="40" height="40" fill="none" stroke="#D9A441" stroke-width="1.5"/><circle cx="24" cy="24" r="8" fill="none" stroke="#F7F0E0" stroke-width="1.5"/><circle cx="24" cy="24" r="3" fill="#D9A441"/><line x1="4" y1="4" x2="16" y2="16" stroke="#D9A441" stroke-width="1"/><line x1="44" y1="4" x2="32" y2="16" stroke="#D9A441" stroke-width="1"/><line x1="4" y1="44" x2="16" y2="32" stroke="#D9A441" stroke-width="1"/><line x1="44" y1="44" x2="32" y2="32" stroke="#D9A441" stroke-width="1"/></svg>
   </div>
 
-  <div class="calendar-nav">
-    <button id="prevMonth" class="cal-btn" aria-label="Previous month">&#8592;</button>
-    <h2 id="monthLabel" class="month-label"></h2>
-    <button id="nextMonth" class="cal-btn" aria-label="Next month">&#8594;</button>
+  <div class="calendar-wrap">
+    <div class="calendar-legend">
+      <span class="legend-item">
+        <span class="legend-tile legend-tile-open"></span>Available
+      </span>
+      <span class="legend-item">
+        <span class="legend-tile legend-tile-booked"></span>Booked
+      </span>
+    </div>
+
+    <div class="calendar-frame">
+      <div class="calendar-inner">
+        <div class="cal-header">
+          <button id="prevMonth" class="cal-btn" aria-label="Previous month">&#8592;</button>
+          <h2 id="monthLabel" class="month-label"></h2>
+          <button id="nextMonth" class="cal-btn" aria-label="Next month">&#8594;</button>
+        </div>
+        <div class="cal-daynames" id="calDaynames"></div>
+        <div class="cal-body" id="calendarGrid" role="grid" aria-label="Booking calendar"></div>
+      </div>
+    </div>
   </div>
 
-  <div id="calendarGrid" class="calendar-grid" role="grid" aria-label="Booking calendar"></div>
-
-  <p class="calendar-note">This calendar is updated by hand, so please confirm exact dates with us by email before finalizing travel plans.</p>
+  <p class="calendar-note" style="text-align:center; max-width:500px; margin: 20px auto 0;">This calendar is updated by hand — please confirm dates with us before finalizing travel plans.</p>
 
   <div class="calendar-cta">
     <a href="contact.html" class="btn btn-primary">Inquire about these dates</a>
@@ -61,7 +345,7 @@
 // ---- Booked date ranges ----
 // Add or remove ranges here. Format: ["YYYY-MM-DD", "YYYY-MM-DD"] (inclusive start, inclusive end)
 const bookedRanges = [
-  // Example: ["2026-07-10", "2026-07-17"],
+  // Example: ["2026-08-01", "2026-08-10"],
 ];
 
 function expandRanges(ranges) {
@@ -80,46 +364,65 @@ function expandRanges(ranges) {
 const bookedSet = expandRanges(bookedRanges);
 
 const monthLabel = document.getElementById("monthLabel");
-const grid = document.getElementById("calendarGrid");
-const prevBtn = document.getElementById("prevMonth");
-const nextBtn = document.getElementById("nextMonth");
+const grid       = document.getElementById("calendarGrid");
+const daynames   = document.getElementById("calDaynames");
+const prevBtn    = document.getElementById("prevMonth");
+const nextBtn    = document.getElementById("nextMonth");
 
 const today = new Date();
-let viewYear = today.getFullYear();
+let viewYear  = today.getFullYear();
 let viewMonth = today.getMonth();
 
 const monthNames = ["January","February","March","April","May","June","July","August","September","October","November","December"];
-const dayNames = ["S","M","T","W","T","F","S"];
+const dayNames   = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
 
 function pad(n) { return n < 10 ? "0" + n : "" + n; }
 
 function render() {
   grid.innerHTML = "";
+  daynames.innerHTML = "";
   monthLabel.textContent = monthNames[viewMonth] + " " + viewYear;
 
   dayNames.forEach(d => {
     const cell = document.createElement("div");
-    cell.className = "cal-cell cal-dayname";
+    cell.className = "cal-dayname-cell";
     cell.textContent = d;
-    grid.appendChild(cell);
+    daynames.appendChild(cell);
   });
 
-  const firstDay = new Date(viewYear, viewMonth, 1).getDay();
+  const firstDay    = new Date(viewYear, viewMonth, 1).getDay();
   const daysInMonth = new Date(viewYear, viewMonth + 1, 0).getDate();
+  const todayStr    = today.getFullYear() + "-" + pad(today.getMonth()+1) + "-" + pad(today.getDate());
 
   for (let i = 0; i < firstDay; i++) {
     const blank = document.createElement("div");
-    blank.className = "cal-cell cal-blank";
+    blank.className = "cal-tile cal-tile-blank";
     grid.appendChild(blank);
   }
 
   for (let day = 1; day <= daysInMonth; day++) {
     const dateStr = viewYear + "-" + pad(viewMonth + 1) + "-" + pad(day);
+    const booked  = bookedSet.has(dateStr);
+    const isToday = dateStr === todayStr;
+
     const cell = document.createElement("div");
-    cell.className = "cal-cell cal-day" + (bookedSet.has(dateStr) ? " cal-booked" : " cal-open");
     cell.setAttribute("role", "gridcell");
-    cell.setAttribute("aria-label", dateStr + (bookedSet.has(dateStr) ? " booked" : " open"));
-    cell.textContent = day;
+    cell.setAttribute("aria-label", dateStr + (booked ? " booked" : " available"));
+
+    if (booked) {
+      cell.className = "cal-tile cal-tile-booked";
+    } else if (isToday) {
+      cell.className = "cal-tile cal-tile-open cal-tile-today";
+      const dot = document.createElement("span");
+      dot.className = "today-dot";
+      cell.appendChild(dot);
+    } else {
+      cell.className = "cal-tile cal-tile-open";
+    }
+
+    const num = document.createElement("span");
+    num.textContent = day;
+    cell.appendChild(num);
     grid.appendChild(cell);
   }
 }
