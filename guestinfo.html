@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guest Info — Casa Soledad</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+.info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-top: 40px;
+}
+@media (max-width: 700px) { .info-grid { grid-template-columns: 1fr; } }
+
+.info-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 28px;
+}
+
+.info-card-icon { font-size: 1.8rem; margin-bottom: 12px; display: block; }
+
+.info-card h3 {
+  font-size: 1.15rem;
+  margin-bottom: 14px;
+  color: var(--terracotta);
+}
+
+.info-card ul {
+  margin: 0; padding: 0 0 0 18px;
+  color: var(--ink-soft);
+  font-size: 0.93rem;
+  line-height: 1.7;
+}
+
+.info-card p {
+  font-size: 0.93rem;
+  margin: 0 0 8px 0;
+}
+
+.info-card p:last-child { margin-bottom: 0; }
+
+.info-highlight {
+  background: #FFF8EC;
+  border: 1px solid var(--ochre);
+  border-radius: var(--radius);
+  padding: 20px 24px;
+  margin-bottom: 32px;
+  font-size: 0.95rem;
+  color: var(--ink);
+}
+
+.info-highlight strong { color: var(--terracotta); }
+
+.rules-list {
+  list-style: none;
+  padding: 0; margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.rules-list li {
+  display: flex;
+  gap: 12px;
+  align-items: baseline;
+  font-size: 0.93rem;
+  color: var(--ink-soft);
+  line-height: 1.55;
+}
+
+.rules-list li::before {
+  content: "—";
+  color: var(--terracotta);
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.full-width { grid-column: 1 / -1; }
+
+.wifi-code {
+  font-family: monospace;
+  font-size: 1.1rem;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 8px 14px;
+  display: inline-block;
+  margin-top: 6px;
+  color: var(--ink);
+  letter-spacing: 0.04em;
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a href="index.html" class="wordmark">Casa Soledad</a>
+    <nav class="main-nav">
+      <a href="index.html">Home</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="availability.html">Availability &amp; Rates</a>
+      <a href="guide.html">Local Guide</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<section class="page-head wrap">
+  <p class="section-eyebrow">For guests</p>
+  <h1>Guest Info</h1>
+  <p class="page-head-sub">Everything you need to know before and during your stay at Casa Soledad. More detail to come — reach out anytime with questions.</p>
+</section>
+
+<section class="wrap" style="padding-bottom: 80px;">
+
+  <div class="info-highlight">
+    <strong>Welcome.</strong> We're glad you're here. This page has the essentials — check-in info, house rules, WiFi, and what to do if something comes up. The <a href="guide.html">Local Guide</a> has our recommendations for food, beaches, and things to do nearby.
+  </div>
+
+  <div class="info-grid">
+
+    <!-- Check-in / Check-out -->
+    <div class="info-card">
+      <span class="info-card-icon">🔑</span>
+      <h3>Check-in &amp; check-out</h3>
+      <ul>
+        <li>Check-in: <strong>3:00 PM</strong> or later</li>
+        <li>Check-out: <strong>11:00 AM</strong></li>
+        <li>Early check-in or late check-out may be possible — contact us in advance</li>
+        <li>Key pickup and access instructions will be sent separately before your arrival</li>
+      </ul>
+    </div>
+
+    <!-- WiFi -->
+    <div class="info-card">
+      <span class="info-card-icon">📶</span>
+      <h3>WiFi</h3>
+      <p>Network name and password:</p>
+      <p><strong>Network:</strong><br><span class="wifi-code">PLACEHOLDER_NETWORK</span></p>
+      <p style="margin-top:12px;"><strong>Password:</strong><br><span class="wifi-code">PLACEHOLDER_PASSWORD</span></p>
+      <p style="margin-top:12px; font-size:0.85rem;">Internet is reliable for video calls and streaming. If it goes out, a router reboot (unplug 30 sec, replug) usually fixes it.</p>
+    </div>
+
+    <!-- House rules -->
+    <div class="info-card full-width">
+      <span class="info-card-icon">🏡</span>
+      <h3>House rules</h3>
+      <ul class="rules-list">
+        <li>Maximum occupancy is <strong>8 guests</strong>. Please do not exceed this.</li>
+        <li>No smoking indoors. Smoking permitted on the rooftop terrace only — please dispose of butts responsibly.</li>
+        <li>The pool is for guests only. Please shower before entering. No glass near the pool.</li>
+        <li>Quiet hours begin at <strong>10:00 PM</strong>. Please be respectful of neighbors.</li>
+        <li>Pets are not permitted without prior approval.</li>
+        <li>Please treat the house and its contents with care. Report any damage promptly — accidents happen, we just need to know.</li>
+        <li>Air conditioning units are in every room. Please close windows and doors when A/C is running.</li>
+        <li>Do not flush anything other than toilet paper. The plumbing is sensitive — a trash bin is provided in each bathroom.</li>
+        <li>Garbage and recycling instructions are posted in the kitchen. Collection days: <strong>[ADD DAYS]</strong>.</li>
+      </ul>
+    </div>
+
+    <!-- Kitchen & appliances -->
+    <div class="info-card">
+      <span class="info-card-icon">🍳</span>
+      <h3>Kitchen &amp; appliances</h3>
+      <ul>
+        <li>Gas stove — the igniter clicks automatically. Hold the knob in for a few seconds after lighting.</li>
+        <li>Filtered drinking water is available from the dispenser in the kitchen. Do not drink tap water.</li>
+        <li>Washer/dryer are in <strong>[ADD LOCATION]</strong>. Detergent is provided.</li>
+        <li>The kitchen is fully stocked with cookware, dishes, and basic pantry staples.</li>
+        <li>Please run the dishwasher before check-out if dishes are dirty.</li>
+      </ul>
+    </div>
+
+    <!-- Emergencies & contacts -->
+    <div class="info-card">
+      <span class="info-card-icon">🚨</span>
+      <h3>Emergencies &amp; contacts</h3>
+      <p><strong>Your host:</strong><br>
+        Alex — <a href="mailto:alexanderdlusk@gmail.com">alexanderdlusk@gmail.com</a><br>
+        WhatsApp / phone: <strong>[ADD NUMBER]</strong>
+      </p>
+      <p><strong>Local emergency:</strong> 911 (works in Mexico)</p>
+      <p><strong>Nearest hospital:</strong><br>
+        IMSS La Paz — approx. 1 hr north<br>
+        Clinic in El Pescadero: <strong>[ADD NAME &amp; NUMBER]</strong>
+      </p>
+      <p><strong>Pharmacy:</strong> <strong>[ADD NEAREST PHARMACY]</strong></p>
+    </div>
+
+    <!-- Getting around -->
+    <div class="info-card full-width">
+      <span class="info-card-icon">🚗</span>
+      <h3>Getting around</h3>
+      <ul class="rules-list">
+        <li>A car is the easiest way to explore. Parking is available on the property under the covered carport.</li>
+        <li>The nearest beach (Playa Los Cerritos) is about <strong>[X] minutes</strong> by car.</li>
+        <li>El Pescadero town center is <strong>[X] minutes</strong> away — restaurants, a small market, and a pharmacy.</li>
+        <li>La Paz is roughly 1 hour north on Highway 19 — best option for large grocery runs, hardware, or medical care.</li>
+        <li>Los Cabos airport (SJD) is approximately <strong>90 minutes</strong> south on Highway 19.</li>
+        <li>Uber and taxis operate in the area but are not always immediately available — plan ahead for airport runs.</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <div style="margin-top: 48px; text-align: center;">
+    <p style="color: var(--ink-soft); margin-bottom: 16px;">Questions about your stay? We're happy to help.</p>
+    <a href="mailto:alexanderdlusk@gmail.com" class="btn btn-primary">Email us</a>
+  </div>
+
+</section>
+
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <span>Casa Soledad &middot; El Pescadero, BCS</span>
+    <a href="contact.html">alexanderdlusk@gmail.com</a>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Local Guide — Casa Soledad</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+/* ── Map section ── */
+.map-wrap {
+  position: relative;
+  width: 100%;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 8px 40px rgba(44,26,14,0.18);
+  border: 4px solid #1C0E07;
+  /* 16:9 on desktop, taller on mobile */
+  aspect-ratio: 16/9;
+}
+
+@media (max-width: 700px) {
+  .map-wrap { aspect-ratio: 3/4; }
+}
+
+.map-wrap iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+}
+
+/* ── Legend ── */
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 24px;
+  margin-top: 24px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px 24px;
+}
+
+.legend-title {
+  width: 100%;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--ink-soft);
+  margin: 0 0 4px 0;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--ink);
+}
+
+.legend-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  border: 2px solid rgba(0,0,0,0.15);
+}
+
+/* ── Intro blurb ── */
+.guide-intro {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  margin-bottom: 48px;
+  align-items: start;
+}
+
+@media (max-width: 700px) {
+  .guide-intro { grid-template-columns: 1fr; gap: 20px; }
+}
+
+.guide-intro p { margin: 0; }
+
+/* ── Tips strip ── */
+.tips-strip {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  margin-top: 48px;
+}
+
+@media (max-width: 700px) {
+  .tips-strip { grid-template-columns: 1fr; }
+}
+
+.tip-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 22px 20px;
+}
+
+.tip-card-icon {
+  font-size: 1.6rem;
+  margin-bottom: 10px;
+  display: block;
+}
+
+.tip-card h4 {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 500;
+  margin: 0 0 6px 0;
+  color: var(--ink);
+}
+
+.tip-card p {
+  font-size: 0.88rem;
+  color: var(--ink-soft);
+  margin: 0;
+  line-height: 1.55;
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a href="index.html" class="wordmark">Casa Soledad</a>
+    <nav class="main-nav">
+      <a href="index.html">Home</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="availability.html">Availability</a>
+      <a href="guide.html" class="active">Local Guide</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<section class="page-head wrap">
+  <p class="section-eyebrow">El Pescadero &middot; BCS</p>
+  <h1>Local Guide</h1>
+  <p class="page-head-sub">Our curated map of the best the area has to offer — updated as we discover new favorites.</p>
+</section>
+
+<section class="wrap" style="padding-bottom: 80px;">
+
+  <!-- Intro -->
+  <div class="guide-intro">
+    <div>
+      <p>El Pescadero is a small town with an outsized personality — world-class surf, a genuine art scene, some of the best fish tacos in Baja, and a weekly market that draws the whole community. It rewards slow exploration on foot and by car. The map below collects our personal recommendations across seven categories. Click any pin for details and directions.</p>
+    </div>
+    <div>
+      <p>The town itself is about ten minutes away. The nearest serious grocery run is La Paz (about an hour north), but the local markets and tianguis cover daily needs just fine. Most restaurants are cash-friendly; a few take cards. Most things worth doing are free or cheap.</p>
+    </div>
+  </div>
+
+  <!-- Map -->
+  <div class="map-wrap">
+    <iframe
+      src="https://www.google.com/maps/d/embed?mid=1_3ctQ8cXf89vctqWBHkqBvCCoRta4UM&ehbc=2E312F&noprof=1"
+      title="Casa Soledad local guide map"
+      allowfullscreen
+      loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade">
+    </iframe>
+  </div>
+
+  <!-- Legend -->
+  <div class="legend">
+    <p class="legend-title">Map categories</p>
+    <span class="legend-item"><span class="legend-dot" style="background:#DB4437;"></span>Restaurants &amp; Bars</span>
+    <span class="legend-item"><span class="legend-dot" style="background:#F4B400;"></span>Coffee &amp; Bakeries</span>
+    <span class="legend-item"><span class="legend-dot" style="background:#0F9D58;"></span>Groceries &amp; Markets</span>
+    <span class="legend-item"><span class="legend-dot" style="background:#4285F4;"></span>Beaches</span>
+    <span class="legend-item"><span class="legend-dot" style="background:#FF6D00;"></span>Activities &amp; Day Trips</span>
+    <span class="legend-item"><span class="legend-dot" style="background:#9C27B0;"></span>Art &amp; Culture</span>
+    <span class="legend-item"><span class="legend-dot" style="background:#757575;"></span>Services</span>
+  </div>
+
+  <!-- Tips -->
+  <div class="tips-strip">
+    <div class="tip-card">
+      <span class="tip-card-icon">🌊</span>
+      <h4>Beaches</h4>
+      <p>Playa Los Cerritos is the most accessible surf beach. Playa La Pastora is wilder and usually empty. Always check conditions — the Pacific here has serious currents in spots.</p>
+    </div>
+    <div class="tip-card">
+      <span class="tip-card-icon">🌮</span>
+      <h4>Eating &amp; drinking</h4>
+      <p>The Thursday tianguis market has exceptional street food. Most restaurants close early by North American standards — plan dinner for 7pm at the latest. Reservations are worth it at the busier spots in high season.</p>
+    </div>
+    <div class="tip-card">
+      <span class="tip-card-icon">🚗</span>
+      <h4>Getting around</h4>
+      <p>A car is helpful but not essential for town. Day trips to La Paz, Cabo Pulmo, or the East Cape require driving. The road to El Pescadero from Los Cabos airport is an easy 90 minutes on Highway 19.</p>
+    </div>
+  </div>
+
+</section>
+
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <span>Casa Soledad &middot; El Pescadero, BCS</span>
+    <a href="contact.html">alexanderdlusk@gmail.com</a>
+  </div>
+</footer>
+
+</body>
+</html>
